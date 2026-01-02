@@ -1,0 +1,28 @@
+## Palindrome Linked List - to find if a linked list is a palindrome
+
+1. find the middle node of the list (fast and slow pointer)
+2. disconnect first half and second half of linked list
+3. reverse the linked list from the middle node (end node of linked list now becomes the middle node)
+4. iteratively compare node values while both halves exist
+5. if either of the heads are None (odd palindrome) or both heads are None (even palindrome) , it is a pallindrome
+
+class Solution:
+    def isPalindrome(self, head):
+        slow,fast=head,head.next
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+        mid=slow.next
+        slow.next=None
+        prev,cur=None,mid
+        while cur:
+            nxt=cur.next
+            cur.next=prev
+            prev=cur
+            cur=nxt
+        head1,head2=head,prev
+        while head1 and head2:
+            if head1.data!=head2.data: return False
+            head1=head1.next
+            head2=head2.next
+        return True
