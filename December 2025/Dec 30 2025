@@ -1,0 +1,40 @@
+# Add Number Linked Lists
+
+'''
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+'''
+class Solution:
+    def reverse(self,head):
+        prev,cur=None,head
+        while cur:
+            nxt=cur.next
+            cur.next=prev
+            prev=cur
+            cur=nxt
+        return prev
+    def addTwoLists(self, head1, head2):
+        if not head1 and not head2: return None
+        l1=self.reverse(head1)
+        l2=self.reverse(head2)
+        carry=0
+        dummy=Node(0)
+        cur=dummy
+        while l1 or l2 or carry:
+            tot=carry
+            if l1:
+                tot+=l1.data
+                l1=l1.next
+            if l2:
+                tot+=l2.data
+                l2=l2.next
+            val=tot%10
+            carry=tot//10
+            cur.next=Node(val)
+            cur=cur.next
+        res=self.reverse(dummy.next)
+        while res and res.data==0 and res.next:
+            res=res.next
+        return res
