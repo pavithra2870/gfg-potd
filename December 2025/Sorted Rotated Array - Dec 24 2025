@@ -1,0 +1,26 @@
+# Count elements less than or equal to k in a sorted rotated array
+
+1. first find the element which divides the rotated array into 2 sorted subarrays
+2. do binary search on the 2 subarrays to find how many elements <= x
+
+class Solution:
+    def countLessEqual(self, arr, x):
+        l,h=0,len(arr)-1
+        n=h
+        while l<h:
+            m=(l+h)//2
+            if arr[m]>arr[h]: l=m+1      #confirms that m...h is not a sorted array so pivot is certainly after m
+            else: h=m     #m..h is sorted so pivot can be m or less than m
+        pivot=l
+        def count(lo,r):
+            l,h=lo,r
+            res=-1
+            while l<=h:
+                m=(l+h)//2
+                if arr[m]<=x:
+                    res=m #first m elements are <= x
+                    l=m+1
+                else: h=m-1
+            return max(0,res-lo+1)
+        res=count(0,pivot-1)+count(pivot,n)
+        return res
