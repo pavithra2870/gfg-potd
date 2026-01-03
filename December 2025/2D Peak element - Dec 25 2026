@@ -1,0 +1,23 @@
+# Find the peak element in a 2d matrix
+
+- peak element is elemet greater than the element on 4 directions next to it
+- brute force is m*n so we use binary search on columns because we can return any peak element
+- we choose to use the mid column, find the row which has the max element of the column 
+- if the max element of the column is greater than elements on left and right (because max element of a column is obv greater than elements up and down), it is the peak
+- if the left element is greater than the max element, peak prolly lies on the left so h=mid-1
+- if right is greater than max element, peak is on right so l=mid+1
+
+class Solution:
+    def findPeakGrid(self, mat):
+        m,n=len(mat),len(mat[0])
+        l,h=0,n-1
+        while l<=h:
+            mid=(l+h)//2
+            maxRow,e=0,mat[0][mid]
+            for i in range(1,m):
+                if mat[i][mid]>e: maxRow,e=i,mat[i][mid]
+            left=mat[maxRow][mid-1] if mid-1>=0 else float("-inf")
+            right=mat[maxRow][mid+1] if mid+1<n else float("-inf")
+            if e>=left and e>=right: return [maxRow,mid]
+            if left>e: h=mid-1
+            else: l=mid+1
