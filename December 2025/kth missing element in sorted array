@@ -1,0 +1,17 @@
+# Kth Missing Positive Number in a Sorted Array
+
+- binary search to find the first element that is >= kth missing element
+- k+m is the no of missing numbers at position m 
+- if arr[m]>k+m, kth missing element is k+m or less than k+m
+- else it is more than k+m
+class Solution:
+    def kthMissing(self, arr, k):
+        if arr[0]>k: return k
+        l,h,res=0,len(arr)-1,len(arr)+k
+        while l<=h:
+            m=(l+h)//2
+            if arr[m]>m+k:
+                res=m+k
+                h=m-1
+            else: l=m+1
+        return res
