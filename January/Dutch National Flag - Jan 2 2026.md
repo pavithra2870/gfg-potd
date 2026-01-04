@@ -9,6 +9,7 @@
 3. if mid element is 0, we swap it with element in low ptr and we increase both ptrs by 1 to expand the 0 and 1 sections
 4. if mid element is 2, we swap it with element in high ptr and we only decrease high ptr by 1 because the element that was swapped from high position should be checked once
 
+```python3 []
 class Solution:
     def sort012(self, arr):
         l,m,h=0,0,len(arr)-1
@@ -24,3 +25,4 @@ class Solution:
                 arr[h],arr[m]=arr[m],arr[h]
                 h-=1
         return arr
+```
