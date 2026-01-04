@@ -1,0 +1,25 @@
+# Flattening a linked list with bottom and next pointers to a single sorted list with only bottom pointers 
+
+given that elements from top to bottom are sorted and left to right are sorted 
+esentially a merge k sorted linked list problem except that the linked lists are joined by next pointer
+first we flatten the right side of the node since we shud only use bottom pointers
+then we merge the flattened right side with the node's bottom
+recursion to flatten the right side and merge it to the node root
+
+class Solution:
+    def merge(self,a,b):
+        if not a: return b
+        if not b: return a
+        if a.data<b.data:
+            result=a
+            result.bottom=self.merge(result.bottom,b)
+        else:
+            result=b
+            result.bottom=self.merge(result.bottom,a)
+        result.next=None
+        return result
+    def flatten(self, root):
+        if not root or not root.next: return root
+        root.next=self.flatten(root.next)
+        root=self.merge(root,root.next)
+        return root
